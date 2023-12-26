@@ -17,10 +17,10 @@ export class Files extends BaseEntity {
   path: string;
 
   @ManyToOne(() => User, user => user.files, { onDelete: "CASCADE", onUpdate: "CASCADE" })
-  @JoinColumn({ name: "user_id" })
+  @JoinColumn({ name: "user_id", } )
   user: User;
 
   @ManyToOne(() => Folders, folder => folder.files, { onDelete: "CASCADE", onUpdate: "CASCADE" })
-  @JoinColumn({ name: "folder_id" })
-  folder: Folders;
+  @JoinColumn({ name: "folder_id"})
+  folder: Folders | null;
 }

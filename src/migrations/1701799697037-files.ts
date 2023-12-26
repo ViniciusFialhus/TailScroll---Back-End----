@@ -36,6 +36,7 @@ export class Files1701799697037 implements MigrationInterface {
           {
             name: "folder_id",
             type: "int",
+            isNullable: true
           }
         ],
       })

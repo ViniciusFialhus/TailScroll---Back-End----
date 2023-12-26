@@ -19,11 +19,13 @@ export class User1700767887308 implements MigrationInterface {
 				{
 					name: 'email',
 					type: 'text',
+					isNullable: true,
 					isUnique: true,
 				},
 				{
 					name: 'password',
 					type: 'text',
+					isNullable: true
 				},
 			],
             
