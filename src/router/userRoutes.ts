@@ -68,14 +68,12 @@ export async function formCreate(req: Request, res: Response) {
     }
     const existingUser = await User.findOne({ where: { name } });
     if (existingUser) {
-      throw new BadRequestError("Existe usuário com este e-mail");
-    }
-    const encriptedPassword = await bcrypt.hash(password, 10);
-    const newUser = new User();
-    newUser.email = email;
-    newUser.password = encriptedPassword;
-    await newUser.save();
-    res.status(201).send({ user: newUser });
+      const encriptedPassword = await bcrypt.hash(password, 10);
+      existingUser.email = email;
+      existingUser.password = encriptedPassword;
+      await existingUser.save();
+      res.status(201).send({ user: existingUser });
+    } 
   } catch (error) {
     if (error instanceof BadRequestError) {
       return res.status(400).json({ error: error.message });
@@ -97,9 +95,8 @@ export async function checkingEmail(req: Request, res: Response) {
         expiresIn: "5h",
       });
       res.status(200).send({ token: token });
-    } else {
-      throw new BadRequestError("Não existe usuário com este e-mail");
     }
+    throw new BadRequestError("Não existe usuário com este e-mail");
   } catch (error) {
     if (error instanceof BadRequestError || error instanceof NotFoundError) {
       return res.status(400).json({ error: error.message });
